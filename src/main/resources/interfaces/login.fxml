@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.LoginController"
+      spacing="10" alignment="CENTER" styleClass="root">
+
+    <Label text="Iniciar Sesión" styleClass="title"/>
+    <TextField fx:id="usernameField" promptText="Nombre"/>
+    <PasswordField fx:id="passwordField" promptText="Contraseña"/>
+    <Button text="Ingresar" onAction="#handleLogin"/>
+    <Label fx:id="messageLabel" styleClass="error-message"/>
+    <Hyperlink text="¿No tienes cuenta? Regístrate" onAction="#goToRegister"/>
+</VBox>

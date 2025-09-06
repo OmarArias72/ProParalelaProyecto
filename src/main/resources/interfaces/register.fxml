@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.RegisterController"
+      spacing="10" alignment="CENTER" styleClass="root">
+
+    <Label text="Registro de Usuario" styleClass="title"/>
+    <TextField fx:id="nameField" promptText="Nombre"/>
+    <TextField fx:id="firstLastNameField" promptText="Apellido Paterno"/>
+    <TextField fx:id="secondLastNameField" promptText="Apellido Materno"/>
+    <DatePicker fx:id="birthDatePicker" promptText="Fecha de Nacimiento"/>
+    <TextField fx:id="correoField" promptText="Correo"/>
+    <PasswordField fx:id="passwordField" promptText="Contraseña"/>
+    <PasswordField fx:id="confirmPasswordField" promptText="Confirmar Contraseña"/>
+    <Button text="Registrarse" onAction="#handleRegister"/>
+    <Label fx:id="messageLabel" styleClass="error-message"/>
+    <Hyperlink text="¿Ya tienes cuenta? Inicia sesión" onAction="#goToLogin"/>
+</VBox>
