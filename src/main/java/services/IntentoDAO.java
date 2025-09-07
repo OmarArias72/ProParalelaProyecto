@@ -13,5 +13,7 @@ public interface IntentoDAO {
     boolean delete(int idIntento);
     List<Intento> findByUsuarioId(int idUsuario);
     List<Intento> findByCuestionarioId(int idCuestionario);
-    Optional<Intento> findLastByUsuarioAndCuestionario(int idUsuario, int idCuestionario);
+    Optional<Intento> findLastByCuestionarioId(int idUsuario, int idCuestionario);
+    Optional<Intento> findLastByUsuarioId(int idUsuario);
+    Optional<Intento> findIncompleteByUserAndQuiz(int idUsuario, int idQuiz);
 }

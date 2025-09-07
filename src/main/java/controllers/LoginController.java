@@ -1,6 +1,7 @@
 package controllers;
 
 
+import dao.UsuarioDAOImp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -14,10 +15,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ProgressIndicator;
+import models.Usuario;
+
+import java.util.Optional;
 
 public class LoginController {
 
     private MainController mainController;
+    private UsuarioDAOImp usuarioDAO = new UsuarioDAOImp();
 
     @FXML
     private TextField usernameField;
@@ -34,7 +39,7 @@ public class LoginController {
 
     @FXML
     private void handleLogin() {
-        String user = usernameField.getText();
+        String correo = usernameField.getText();
         String pass = passwordField.getText();
 
         // Mostrar indicador de carga
@@ -45,9 +50,13 @@ public class LoginController {
         Task<Boolean> loginTask = new Task<Boolean>() {
             @Override
             protected Boolean call() throws Exception {
-                // Simular tiempo de verificación
-                Thread.sleep(1000);
-                return user.equals("admin") && pass.equals("1234");
+                Optional<Usuario> usuarioOpt = usuarioDAO.findByEmail(correo);
+                if (usuarioOpt.isPresent()) {
+                    Usuario usuario = usuarioOpt.get();
+                    mainController.setUsuarioActivo(usuario);
+                    return usuario.getPassword().equals(pass); // 🔒 Aquí podrías usar hash (ej. BCrypt)
+                }
+                return false;
             }
         };
 
@@ -58,6 +67,7 @@ public class LoginController {
             if (success) {
                 messageLabel.setText("Login exitoso");
                 messageLabel.setStyle("-fx-text-fill: green;");
+                mainController.changeScene("home.fxml");
             } else {
                 messageLabel.setText("Usuario o contraseña incorrectos");
                 messageLabel.setStyle("-fx-text-fill: red;");

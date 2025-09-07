@@ -18,6 +18,9 @@
     <PasswordField fx:id="passwordField" promptText="Contraseña"/>
     <PasswordField fx:id="confirmPasswordField" promptText="Confirmar Contraseña"/>
     <Button text="Registrarse" onAction="#handleRegister"/>
+    <!-- Indicador de carga -->
+    <ProgressIndicator fx:id="loadingIndicator" visible="false"/>
+
     <Label fx:id="messageLabel" styleClass="error-message"/>
     <Hyperlink text="¿Ya tienes cuenta? Inicia sesión" onAction="#goToLogin"/>
 </VBox>

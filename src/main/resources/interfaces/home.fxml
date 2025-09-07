@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.HomeController"
+      spacing="20" alignment="CENTER" styleClass="root">
+
+    <padding>
+        <Insets top="50" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label fx:id="welcomeLabel" styleClass="welcome-text"/>
+
+    <Button text="Realizar Cuestionario" onAction="#handleTakeQuiz" styleClass="action-button"/>
+
+    <Button text="Ver Resultados" onAction="#handleViewResults" styleClass="action-button"/>
+    <Button text="Cerrar sesion" onAction="#handleQuitSession" styleClass="action-button"/>
+
+</VBox>

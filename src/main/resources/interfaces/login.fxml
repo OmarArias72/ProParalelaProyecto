@@ -10,9 +10,12 @@
       spacing="10" alignment="CENTER" styleClass="root">
 
     <Label text="Iniciar Sesión" styleClass="title"/>
-    <TextField fx:id="usernameField" promptText="Nombre"/>
+    <TextField fx:id="usernameField" promptText="Correo"/>
     <PasswordField fx:id="passwordField" promptText="Contraseña"/>
     <Button text="Ingresar" onAction="#handleLogin"/>
+    <!-- Indicador de carga -->
+    <ProgressIndicator fx:id="loadingIndicator" visible="false"/>
+
     <Label fx:id="messageLabel" styleClass="error-message"/>
     <Hyperlink text="¿No tienes cuenta? Regístrate" onAction="#goToRegister"/>
 </VBox>

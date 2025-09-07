@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.ResultsController"
+      spacing="20" alignment="CENTER" styleClass="results-root">
+
+    <padding>
+        <Insets top="50" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="¡Cuestionario Completado!" styleClass="title"/>
+    <Label fx:id="scoreLabel" styleClass="score-label"/>
+
+    <ScrollPane fx:id="answersScrollPane" fitToWidth="true" styleClass="answers-scroll-pane" VBox.vgrow="ALWAYS">
+        <VBox fx:id="answersContainer" spacing="15" styleClass="answers-container">
+        </VBox>
+    </ScrollPane>
+
+    <Button text="Volver al Inicio" onAction="#handleGoHome" styleClass="home-button"/>
+</VBox>

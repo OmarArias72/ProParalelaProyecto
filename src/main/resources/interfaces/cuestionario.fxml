@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.QuizController"
+      spacing="20" alignment="CENTER" styleClass="quiz-root">
+
+    <!-- 🔹 Agregar el Label del temporizador -->
+    <Label fx:id="timerLabel" styleClass="timer-label" text="Tiempo: 00:00:00"/>
+
+    <Label fx:id="questionNumberLabel" styleClass="question-number"/>
+    <Label fx:id="questionTextLabel" wrapText="true" styleClass="question-text"/>
+
+    <VBox fx:id="optionsContainer" spacing="10" alignment="CENTER_LEFT">
+        <padding>
+            <Insets left="50" right="50"/>
+        </padding>
+    </VBox>
+
+    <Button fx:id="nextButton" text="Siguiente" onAction="#handleNextQuestion" styleClass="next-button"/>
+
+    <Button fx:id="finishButton" text="Finalizar" visible="false" onAction="#finishQuizz" styleClass="next-button"/>
+
+    <Label fx:id="messageLabel" styleClass="message"/>
+
+    <ProgressIndicator fx:id="loadingIndicator" visible="false" styleClass="loading-indicator"/>
+
+</VBox>

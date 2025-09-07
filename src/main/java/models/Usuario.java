@@ -3,6 +3,7 @@ package models;
 import java.util.Date;
 
 public class Usuario {
+    private int id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -11,6 +12,7 @@ public class Usuario {
     private String password;
 
 
+    public Usuario() {};
     public Usuario(String nombre,
                    String apellidoPaterno,
                    String apellidoMaterno,
@@ -23,6 +25,14 @@ public class Usuario {
         this.correo = correo;
         this.fechaNacimiento = fechaNacimiento;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {

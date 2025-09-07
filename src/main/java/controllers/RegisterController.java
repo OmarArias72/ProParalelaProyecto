@@ -1,9 +1,8 @@
 package controllers;
 
+import dao.UsuarioDAOImp;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 
 import javafx.application.Platform;
@@ -12,14 +11,27 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ProgressIndicator;
+import models.Usuario;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class RegisterController {
 
     private MainController mainController;
+    private UsuarioDAOImp usuarioDAO = new UsuarioDAOImp();
 
     @FXML
-    private TextField usernameField;
+    private TextField nameField;
+    @FXML
+    private TextField firstLastNameField;
+    @FXML
+    private TextField secondLastNameField;
+    @FXML
+    private DatePicker birthDatePicker;
+    @FXML
+    private TextField correoField;
     @FXML
     private PasswordField passwordField;
     @FXML
@@ -35,11 +47,24 @@ public class RegisterController {
 
     @FXML
     private void handleRegister() {
-        String user = usernameField.getText();
+        String user = nameField.getText();
+        String firstLastName = firstLastNameField.getText();
+        String secondLastName = secondLastNameField.getText();
+
+        LocalDate localDate = birthDatePicker.getValue(); // obtiene la fecha seleccionada
+        Date date=null;
+        if (localDate != null) {
+            date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            System.out.println("Fecha convertida a Date: " + date);
+        } else {
+            System.out.println("No se ha seleccionado una fecha.");
+        }
+        String correo = correoField.getText();
         String pass = passwordField.getText();
         String confirm = confirmPasswordField.getText();
 
-        if (user.isEmpty() || pass.isEmpty() || confirm.isEmpty()) {
+        if (user.isEmpty() || pass.isEmpty() || confirm.isEmpty() || firstLastName.isEmpty() || secondLastName.isEmpty()
+                || correo.isEmpty() || pass.isEmpty() || confirm.isEmpty()) {
             messageLabel.setText("Todos los campos son obligatorios");
             return;
         }
@@ -49,18 +74,24 @@ public class RegisterController {
             return;
         }
 
+        // Construir objeto Usuario
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre(user);
+        nuevoUsuario.setApellidoPaterno(firstLastName);
+        nuevoUsuario.setApellidoMaterno(secondLastName);
+        nuevoUsuario.setCorreo(correo);
+        nuevoUsuario.setPassword(pass); // 🔒 Idealmente deberías cifrarla
+        nuevoUsuario.setFechaNacimiento(date);
+
         // Mostrar indicador de carga
         loadingIndicator.setVisible(true);
         messageLabel.setText("Registrando...");
 
         // Ejecutar registro en hilo secundario
-        Task<Void> registerTask = new Task<Void>() {
+        Task<Boolean> registerTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
-                // Simular tiempo de registro
-                Thread.sleep(1500);
-                // Aquí iría la lógica real de registro
-                return null;
+            protected Boolean call() {
+                return usuarioDAO.save(nuevoUsuario);
             }
         };
 
@@ -68,6 +99,12 @@ public class RegisterController {
             loadingIndicator.setVisible(false);
             messageLabel.setText("Registro exitoso");
             messageLabel.setStyle("-fx-text-fill: green;");
+            // 🔹 Crear sesión automáticamente
+            mainController.setUsuarioActivo(nuevoUsuario);
+
+            // 🔹 Cambiar a la vista principal
+            mainController.changeScene("home.fxml");
+
         });
 
         registerTask.setOnFailed(event -> {

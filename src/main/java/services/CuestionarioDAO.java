@@ -1,15 +1,14 @@
 package services;
 
 import models.Cuestionario;
+import models.Opcion;
+import models.Pregunta;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CuestionarioDAO {
-    Optional<Cuestionario> findById(int idCuestionario);
-    List<Cuestionario> findAll();
-    boolean save(Cuestionario cuestionario);
-    boolean update(Cuestionario cuestionario);
-    boolean delete(int idCuestionario);
-    List<Cuestionario> findByUsuarioId(int idUsuario);
+    Cuestionario getCuestionario(int id);
+    List<Pregunta> getPreguntasByCuestionario(int id);
+    List<Opcion> getOpcionesByPregunta(int id);
 }

@@ -11,18 +11,19 @@ public class Intento {
     private int idUsuario;
     private int idCuestionario;
     private List<Respuesta> respuestas;
-
+    private int respuestasCorrectas;
     // Constructores
-    public Intento() {}
+    public Intento() {};
 
     public Intento(int idIntento, LocalTime tiempoCompletado, int noIntento,
-                   double total, int idUsuario, int idCuestionario) {
+                   double total, int idUsuario, int idCuestionario, int respuestasCorrectas) {
         this.idIntento = idIntento;
         this.tiempoCompletado = tiempoCompletado;
         this.noIntento = noIntento;
         this.total = total;
         this.idUsuario = idUsuario;
         this.idCuestionario = idCuestionario;
+        this.respuestasCorrectas = respuestasCorrectas;
     }
 
     // Getters y Setters
@@ -46,6 +47,14 @@ public class Intento {
 
     public List<Respuesta> getRespuestas() { return respuestas; }
     public void setRespuestas(List<Respuesta> respuestas) { this.respuestas = respuestas; }
+
+    public int getRespuestasCorrectas() {
+        return respuestasCorrectas;
+    }
+
+    public void setRespuestasCorrectas(int respuestasCorrectas) {
+        this.respuestasCorrectas = respuestasCorrectas;
+    }
 
     @Override
     public String toString() {
