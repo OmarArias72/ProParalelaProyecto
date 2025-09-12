@@ -16,4 +16,5 @@ public interface IntentoDAO {
     Optional<Intento> findLastByCuestionarioId(int idUsuario, int idCuestionario);
     Optional<Intento> findLastByUsuarioId(int idUsuario);
     Optional<Intento> findIncompleteByUserAndQuiz(int idUsuario, int idQuiz);
+    int countCompletedAttempts(int idUsuario, int idCuestionario);
 }

@@ -158,5 +158,34 @@ public class MainController {
         thread.start();
     }
 
+    /**
+     * Nuevo método para cambiar escenas con un Parent ya cargado
+     * Útil cuando el controlador ya ha sido configurado externamente
+     */
+    public void changeSceneWithLoader(Parent root) {
+        Platform.runLater(() -> {
+            try {
+                applySceneAndShow(root);
+            } catch (Exception e) {
+                System.err.println("Error al cambiar escena con loader: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+    }
+    /**
+     * Método utilitario para aplicar la escena y mostrarla
+     */
+    private void applySceneAndShow(Parent root) {
+        try {
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show(); // Asegurar que la ventana se muestre
+        } catch (Exception e) {
+            System.err.println("Error aplicando escena: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
 }

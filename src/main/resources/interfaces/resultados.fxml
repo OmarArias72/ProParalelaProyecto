@@ -4,22 +4,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.ResultsController"
-      spacing="20" alignment="CENTER" styleClass="results-root">
-
+<VBox alignment="CENTER" spacing="20.0" styleClass="main-container" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ResultsController">
     <padding>
-        <Insets top="50" right="20" bottom="20" left="20"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label text="¡Cuestionario Completado!" styleClass="title"/>
-    <Label fx:id="scoreLabel" styleClass="score-label"/>
+    <Label styleClass="title-label" text="Resultados del Cuestionario" />
 
-    <ScrollPane fx:id="answersScrollPane" fitToWidth="true" styleClass="answers-scroll-pane" VBox.vgrow="ALWAYS">
-        <VBox fx:id="answersContainer" spacing="15" styleClass="answers-container">
+    <HBox alignment="CENTER" spacing="10.0">
+        <Label text="Seleccionar Intento:" styleClass="summary-label"/>
+        <ComboBox fx:id="intentoComboBox" promptText="Selecciona un Intento" />
+        <Button onAction="#handleLoadSelectedAttempt" text="Ver Resultados" styleClass="action-button"/>
+    </HBox>
+
+    <VBox fx:id="resultsSummaryContainer" alignment="CENTER_LEFT" spacing="10.0" styleClass="results-summary-container">
+        <Label fx:id="scoreLabel" styleClass="summary-label" text="Puntaje: --" />
+        <Label fx:id="percentageLabel" styleClass="summary-label" text="Porcentaje de aciertos: --" />
+        <Label fx:id="classificationLabel" styleClass="summary-label" text="Clasificación: --" />
+        <Label fx:id="descriptionLabel" styleClass="summary-description-label" text="--"/>
+    </VBox>
+
+    <ScrollPane fx:id="answersScrollPane" fitToWidth="true" styleClass="answers-scroll-pane" visible="false">
+        <VBox fx:id="answersContainer" alignment="TOP_LEFT" spacing="15.0" styleClass="answers-container">
         </VBox>
     </ScrollPane>
 
-    <Button text="Volver al Inicio" onAction="#handleGoHome" styleClass="home-button"/>
+    <HBox alignment="CENTER" spacing="20.0">
+        <Button onAction="#handleGoHome" styleClass="action-button" text="Volver al Inicio" />
+    </HBox>
 </VBox>

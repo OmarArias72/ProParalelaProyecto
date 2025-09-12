@@ -5,6 +5,7 @@ import services.IntentoDAO;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,7 +96,21 @@ public class IntentoDAOImp implements IntentoDAO {
 
     @Override
     public List<Intento> findByUsuarioId(int idUsuario) {
-        return List.of();
+        String sql = "SELECT * FROM Intentos WHERE id_usuario = ? ORDER BY id_intento DESC";
+        List<Intento> intentos = new ArrayList<>();
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                intentos.add(mapResultSetToIntento(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error finding attempts by user: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return intentos;
     }
 
     @Override
@@ -162,6 +177,23 @@ public class IntentoDAOImp implements IntentoDAO {
         return Optional.empty();
     }
 
+    @Override
+    public int countCompletedAttempts(int idUsuario, int idCuestionario) {
+        String sql = "SELECT COUNT(*) FROM Intentos WHERE id_usuario = ? AND id_cuestionario = ? AND total IS NOT NULL";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idCuestionario);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error counting completed attempts: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     private Intento mapResultSetToIntento(ResultSet rs) throws SQLException {
         Intento intento = new Intento();
         intento.setIdIntento(rs.getInt("id_intento"));
@@ -177,5 +209,24 @@ public class IntentoDAOImp implements IntentoDAO {
         intento.setIdUsuario(rs.getInt("id_usuario"));
         intento.setIdCuestionario(rs.getInt("id_cuestionario"));
         return intento;
+    }
+
+    public List<Intento> findByUsuarioAndCuestionario(int idUsuario, int idCuestionario) {
+        String sql = "SELECT * FROM Intentos WHERE id_usuario = ? AND id_cuestionario = ? ORDER BY noIntento ASC";
+        List<Intento> intentos = new ArrayList<>();
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idCuestionario);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                intentos.add(mapResultSetToIntento(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error finding attempts by user and quiz: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return intentos;
     }
 }
